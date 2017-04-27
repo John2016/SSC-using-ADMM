@@ -8,6 +8,8 @@
 % Copyright @ Ehsan Elhamifar, 2012
 %--------------------------------------------------------------------------
 
+% normalize, symmetric, K-sparse
+% hash used here may make this algorithm more efficient
 
 function [CKSym,CAbs] = BuildAdjacency(CMat,K)
 
@@ -18,7 +20,8 @@ end
 N = size(CMat,1);
 CAbs = abs(CMat);
 
-[Srt,Ind] = sort( CAbs,1,'descend' );
+[~,Ind] = sort( CAbs,1,'descend' );
+% [Srt,Ind] = sort( CAbs,1,'descend' );
 
 if (K == 0)
     for i = 1:N
@@ -29,6 +32,7 @@ else
         for j = 1:K
             CAbs(Ind(j,i),i) = CAbs(Ind(j,i),i) ./ (CAbs(Ind(1,i),i)+eps);
         end
+        % what about other data, which should be set to 0, wrong code
     end
 end
 

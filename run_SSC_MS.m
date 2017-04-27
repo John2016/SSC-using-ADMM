@@ -15,17 +15,21 @@
 % sequences with n motions (using 4n-dimensional data)
 %--------------------------------------------------------------------------
 % Copyright @ Ehsan Elhamifar, 2012
+% @ Yuan, 2017
 %--------------------------------------------------------------------------
 
 clc, clear all, close all
 
-cd '/Users/ehsanelhamifar/Documents/MatlabCode/Hopkins155/';
-addpath '/Users/ehsanelhamifar/Documents/MatlabCode/SSC_motion_face/';
+%cd '/Users/ehsanelhamifar/Documents/MatlabCode/Hopkins155/';
+cd '../data/Hopkins155/'
+%addpath '/Users/ehsanelhamifar/Documents/MatlabCode/SSC_motion_face/';
 
+% max num of iters
 alpha = 800;
     
 maxNumGroup = 5;
 for i = 1:maxNumGroup
+    % number of points belong to every cluster
     num(i) = 0;
 end
 
@@ -44,16 +48,20 @@ for i = 1:length(d)
                 break
             end
         end
+        f(ind).name
         eval(['load ' f(ind).name]);
         cd ..
         
         if (foundValidData)
+            % num of clusters
             n = max(s);
             N = size(x,2);
             F = size(x,3);
             D = 2*F;
+            % clumn - points, row - xyaxis in all frames
             X = reshape(permute(x(1:2,:,:),[1 3 2]),D,N);
             
+            % r, number of dimension reduction 
             r = 0; affine = true; outlier = false; rho = 0.7;
             [missrate1,C1] = SSC(X,r,affine,alpha,outlier,rho,s);
             
@@ -61,6 +69,7 @@ for i = 1:length(d)
             [missrate2,C2] = SSC(X,r,affine,alpha,outlier,rho,s);
 
             num(n) = num(n) + 1;
+            % the missrate in the two/three classification problems
             missrateTot1{n}(num(n)) = missrate1;
             missrateTot2{n}(num(n)) = missrate2;
             

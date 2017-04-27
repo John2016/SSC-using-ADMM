@@ -7,6 +7,8 @@
 % Xp: r x N matrix of N projectred data points
 %--------------------------------------------------------------------------
 % Copyright @ Ehsan Elhamifar, 2012
+% more types of projection methods are needed, like:
+%           random projection
 %--------------------------------------------------------------------------
 
 
