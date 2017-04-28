@@ -12,6 +12,11 @@
 % Copyright @ Ehsan Elhamifar, 2012
 %--------------------------------------------------------------------------
 
+% modified based on local sensitivity hash
+% @ Yuan Li, 2017
+% modified based on smooth theory
+% @ Yuan Li, 2017
+
 function C2 = admmLasso_mat_func(Y,affine,alpha,thr,maxIter)
 
 if (nargin < 2)
@@ -19,7 +24,7 @@ if (nargin < 2)
     affine = false; 
 end
 if (nargin < 3)
-    % default regularizarion parameters
+    % default regularizarion parameters, penalty
     alpha = 800;
 end
 if (nargin < 4)
@@ -67,6 +72,7 @@ if (~affine)
         Z = A * (mu1*(Y'*Y)+mu2*(C1-Lambda2/mu2));
         Z = Z - diag(diag(Z));
         % updating C
+        % all value less than 1/mu2 is removed & diagnol values are removed
         C2 = max(0,(abs(Z+Lambda2/mu2) - 1/mu2*ones(N))) .* sign(Z+Lambda2/mu2);
         C2 = C2 - diag(diag(C2));
         % updating Lagrange multipliers

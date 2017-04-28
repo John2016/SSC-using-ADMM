@@ -11,6 +11,7 @@
 % Modified @ Chong You, 2015
 %--------------------------------------------------------------------------
 
+% n is the target number of clusters
 function [groups, kerNS] = SpectralClustering(CKSym,n)
 
 warning off;
@@ -24,7 +25,10 @@ REPlic = 20; % Number of replications for KMeans
 DN = diag( 1./sqrt(sum(CKSym)+eps) );
 LapN = speye(N) - DN * CKSym * DN;
 [~,~,vN] = svd(LapN);
+% the head k eign-value's eign-vectors are chosen to cluster k clusters
 kerN = vN(:,N-n+1:N);
+% fobenius?
 normN = sum(kerN .^2, 2) .^.5;
+% what's the benifits from this operation
 kerNS = bsxfun(@rdivide, kerN, normN + eps);
 groups = kmeans(kerNS,n,'maxiter',MAXiter,'replicates',REPlic,'EmptyAction','singleton');

@@ -6,10 +6,10 @@ function [newL2] = bestMap(L1,L2)
 %   version 1.0 --November/2003
 %
 %   Written by Deng Cai (dengcai AT gmail.com)
-
-
 %===========    
 
+% this means something when the result of spectra clustering is larger than
+% the ground truth
 L1 = L1(:);
 L2 = L2(:);
 if size(L1) ~= size(L2)
@@ -32,5 +32,6 @@ end
 [c,t] = hungarian(-G);
 newL2 = zeros(size(L2));
 for i=1:nClass2
+    % c is a 3-length vector containing 3,1,2
     newL2(L2 == Label2(i)) = Label1(c(i));
 end

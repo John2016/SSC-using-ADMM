@@ -42,5 +42,6 @@ end
 
 CKSym = BuildAdjacency(thrC(C,rho), 20);
 grps = SpectralClustering(CKSym,n);
+% what's the bestmap
 grps = bestMap(s,grps);
 missrate = sum(s(:) ~= grps(:)) / length(s);

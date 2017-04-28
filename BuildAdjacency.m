@@ -28,6 +28,7 @@ if (K == 0)
         CAbs(:,i) = CAbs(:,i) ./ (CAbs(Ind(1,i),i)+eps);
     end
 else
+    % gaijin  CK = zeros(N,N);
     for i = 1:N
         for j = 1:K
             CAbs(Ind(j,i),i) = CAbs(Ind(j,i),i) ./ (CAbs(Ind(1,i),i)+eps);
